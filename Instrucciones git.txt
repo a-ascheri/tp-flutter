@@ -1,0 +1,1 @@
+git init = inicializar un repositorio (solo se hace la primera vez)
