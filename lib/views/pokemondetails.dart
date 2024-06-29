@@ -56,7 +56,7 @@ class PokemonDetailsScreen extends StatelessWidget {
           children: [
             SizedBox(height: 5), // Separación de 5 px
             SizedBox(
-              height: 90,  // Ajusta el tamaño según sea necesario
+              height: 100,  // Ajusta el tamaño según sea necesario
               width: double.infinity,
               child: Image.asset(
                 'poke_background.png',
