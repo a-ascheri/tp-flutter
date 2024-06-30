@@ -1,10 +1,12 @@
 import '../services/pokemon_service.dart';
+import '../services/team_service.dart';
 import '../models/pokemon.dart';
 
 class PokedexController {
   final PokemonService pokemonService;
+  final TeamService teamService;
 
-  PokedexController({required this.pokemonService});
+  PokedexController({required this.pokemonService, required this.teamService});
 
   Future<List<Pokemon>> getPokemons() {
     return pokemonService.fetchPokemons();
@@ -22,5 +24,9 @@ class PokedexController {
     tempFilteredList.sort((a, b) => a.id.compareTo(b.id));
     
     return tempFilteredList;
+  }
+
+  Future<void> addPokemonToTeam(Pokemon pokemon) {
+    return teamService.addPokemonToTeam(pokemon);
   }
 }

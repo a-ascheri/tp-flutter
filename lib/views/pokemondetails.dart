@@ -59,7 +59,7 @@ class PokemonDetailsScreen extends StatelessWidget {
               height: 100,  // Ajusta el tamaño según sea necesario
               width: double.infinity,
               child: Image.asset(
-                'poke_background.png',
+                'assets/poke_background.png',
                 fit: BoxFit.contain,
               ),
             ),
@@ -99,7 +99,7 @@ class PokemonDetailsScreen extends StatelessWidget {
                           top: 20.0,
                           left: -5.0,
                           child: Image.asset(
-                            'pokeopen.png',
+                            'assets/pokeopen.png',
                             width: 45,
                             height: 100,
                           ),

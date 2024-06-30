@@ -8,17 +8,15 @@ class TeamController {
   TeamController({required this.service});
 
   Future<List<Pokemon>> getTeam() async {
-    try {
-      final equipo = await service.getPokemonTeam(1); // Asume que el ID del usuario es 1
-      return equipo;
-    }
-    catch(error) {
-      return [];
-    }
+    return await service.getPokemonTeam();
   }
 
-  void updatePokemonName(Pokemon pokemon, String newName) {
+  Future<void> updatePokemonName(Pokemon pokemon, String newName) async {
     pokemon.name = newName;
-    service.updatePokemon(pokemon);
+    await service.updatePokemon(pokemon);
+  }
+
+  Future<void> removePokemonFromTeam(Pokemon pokemon) async {
+    await service.removePokemonFromTeam(pokemon);
   }
 }

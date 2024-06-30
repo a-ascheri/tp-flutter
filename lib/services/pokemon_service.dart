@@ -1,7 +1,6 @@
+// pokemon_service.dart
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
-
 import '../models/pokemon.dart';
 
 class PokemonService {
@@ -9,21 +8,28 @@ class PokemonService {
     final response = await http.get(Uri.parse('https://pokeapi.co/api/v2/pokemon?limit=100'));
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
-      List<Pokemon> pokemonList = [];
+      List<Future<Pokemon>> pokemonFutures = [];
       for (int i = 0; i < data['results'].length; i++) {
         final pokemonData = data['results'][i];
-        final pokemon = Pokemon.fromJson(pokemonData, i + 1);
-        final details = await fetchPokemonDetails(pokemonData['url']);
-        final types = (details['types'] as List)
-          .map((type) => type['type']['name'] as String)
-          .toList();
-        pokemon.types = types;
-        pokemonList.add(pokemon);
+        pokemonFutures.add(_createPokemon(pokemonData, i + 1));
       }
-      return pokemonList;
+      return await Future.wait(pokemonFutures);
     } else {
       throw Exception('Failed to fetch data');
     }
+  }
+
+  Future<Pokemon> _createPokemon(Map<String, dynamic> pokemonData, int id) async {
+    final details = await fetchPokemonDetails(pokemonData['url']);
+    final types = (details['types'] as List)
+        .map((type) => type['type']['name'] as String)
+        .toList();
+    return Pokemon(
+      name: pokemonData['name'],
+      id: id,
+      imageUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$id.png',
+      types: types,
+    );
   }
 
   Future<Map<String, dynamic>> fetchPokemonDetails(String url) async {

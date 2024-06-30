@@ -5,9 +5,9 @@ class Pokemon {
   List<String> types;
 
   Pokemon({
-    required this.name, 
-    required this.id, 
-    required this.imageUrl, 
+    required this.name,
+    required this.id,
+    required this.imageUrl,
     this.types = const [], // provide a default value
   });
 

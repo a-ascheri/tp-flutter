@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:prueba/views/pokedex.dart';
 import 'package:prueba/views/pokemondetails.dart';
 import 'package:prueba/views/team_screen.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 void main() async {
+  sqfliteFfiInit();
+  databaseFactory = databaseFactoryFfi;
+
   runApp(MyApp());
 }
 

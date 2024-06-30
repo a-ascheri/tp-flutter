@@ -1,34 +1,28 @@
-// team_service.dart
 import 'package:prueba/models/pokemon.dart';
 import 'package:prueba/services/database_service.dart';
 
 class TeamService {
   final DatabaseService _dbService = DatabaseService();
 
-  Future<List<Pokemon>> getPokemonTeam(int userId) async {
-    final db = await _dbService.connection;
-    final results = await db.query('SELECT * FROM pokemon WHERE user_id = ?', [userId]);
+  Future<List<Pokemon>> getPokemonTeam() async {
+    final db = await _dbService.database;
+    final results = await db.query('pokemon');
 
-    return results.map((row) => Pokemon.fromMap(row.fields)).toList();
+    return results.map((row) => Pokemon.fromMap(row)).toList();
   }
 
   Future<void> addPokemonToTeam(Pokemon pokemon) async {
-    final db = await _dbService.connection;
-    await db.query('INSERT INTO pokemon (usuario_id, name, id, imageUrl, types) VALUES (1, ?, ?, ?, ?)', [
-      pokemon.name,
-      pokemon.id,
-      pokemon.imageUrl,
-      pokemon.types.join(', '),
-    ]);
+    final db = await _dbService.database;
+    await db.insert('pokemon', pokemon.toMap());
   }
 
   Future<void> removePokemonFromTeam(Pokemon pokemon) async {
-    final db = await _dbService.connection;
-    await db.query('DELETE FROM pokemon WHERE id = ? and usuario_id=1', [pokemon.id]);
+    final db = await _dbService.database;
+    await db.delete('pokemon', where: 'id = ?', whereArgs: [pokemon.id]);
   }
 
   Future<void> updatePokemon(Pokemon pokemon) async {
-    final db = await _dbService.connection;
-    await db.query('UPDATE pokemon SET name = ? WHERE id = ?', [pokemon.name, pokemon.id]);
+    final db = await _dbService.database;
+    await db.update('pokemon', pokemon.toMap(), where: 'id = ?', whereArgs: [pokemon.id]);
   }
 }

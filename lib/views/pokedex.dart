@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:prueba/services/pokemon_service.dart';
-
+import 'package:prueba/services/team_service.dart';
 import '../controllers/pokedex_controller.dart';
 import '../models/pokemon.dart';
 import 'pokemondetails.dart';
@@ -13,7 +13,10 @@ class PokedexScreen extends StatefulWidget {
 class _PokedexScreenState extends State<PokedexScreen> {
   List<Pokemon> allPokemonList = [];
   List<Pokemon> filteredPokemonList = [];
-  final PokedexController _controller = PokedexController(pokemonService: PokemonService());
+  final PokedexController _controller = PokedexController(
+    pokemonService: PokemonService(),
+    teamService: TeamService(),
+  );
 
   String selectedType = 'all';
   bool isLoading = true;
@@ -52,6 +55,10 @@ class _PokedexScreenState extends State<PokedexScreen> {
     setState(() {
       filteredPokemonList.removeAt(index);
     });
+  }
+
+  Future<void> _addPokemonToTeam(Pokemon pokemon) async {
+    await _controller.addPokemonToTeam(pokemon);
   }
 
   @override
@@ -169,9 +176,16 @@ class _PokedexScreenState extends State<PokedexScreen> {
                             },
                             child: Dismissible(
                               key: Key(pokemon.name),
-                              direction: DismissDirection.startToEnd,
-                              onDismissed: (direction) {
-                                _removePokemon(index);
+                              direction: DismissDirection.horizontal,
+                              onDismissed: (direction) async {
+                                if (direction == DismissDirection.startToEnd) {
+                                  _removePokemon(index);
+                                } else if (direction == DismissDirection.endToStart) {
+                                  await _addPokemonToTeam(pokemon);
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text('${pokemon.name} added to team!')),
+                                  );
+                                }
                               },
                               background: Container(
                                 color: Colors.red,
@@ -179,6 +193,15 @@ class _PokedexScreenState extends State<PokedexScreen> {
                                 padding: EdgeInsets.symmetric(horizontal: 20.0),
                                 child: Icon(
                                   Icons.delete,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              secondaryBackground: Container(
+                                color: Colors.green,
+                                alignment: Alignment.centerRight,
+                                padding: EdgeInsets.symmetric(horizontal: 20.0),
+                                child: Icon(
+                                  Icons.add,
                                   color: Colors.white,
                                 ),
                               ),
@@ -199,7 +222,7 @@ class _PokedexScreenState extends State<PokedexScreen> {
                                       ),
                                     ),
                                     Image.asset(
-                                      'pokeball.png',
+                                      'assets/pokeball.png',
                                       width: 24,
                                       height: 24,
                                     ),
