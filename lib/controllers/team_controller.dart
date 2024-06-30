@@ -1,6 +1,6 @@
 // team_controller.dart
-import '../services/team_service.dart';
 import '../models/pokemon.dart';
+import '../services/team_service.dart';
 
 class TeamController {
   final TeamService service;
@@ -8,8 +8,13 @@ class TeamController {
   TeamController({required this.service});
 
   Future<List<Pokemon>> getTeam() async {
-    final equipo = await service.getPokemonTeam(1); // Asume que el ID del usuario es 1
-    return equipo;
+    try {
+      final equipo = await service.getPokemonTeam(1); // Asume que el ID del usuario es 1
+      return equipo;
+    }
+    catch(error) {
+      return [];
+    }
   }
 
   void updatePokemonName(Pokemon pokemon, String newName) {

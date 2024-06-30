@@ -83,6 +83,14 @@ class _PokedexScreenState extends State<PokedexScreen> {
                   elevation: 0,
                   titleSpacing: 10,
                   centerTitle: false,
+                  actions: [
+                    IconButton(
+                      icon: Icon(Icons.group),
+                      onPressed: () {
+                        Navigator.pushNamed(context, "/team");
+                      },
+                    ),
+                  ],
                 ),
                 Container(
                   height: 2.5,

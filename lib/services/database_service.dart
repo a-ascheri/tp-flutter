@@ -14,9 +14,9 @@ class DatabaseService {
     final settings = ConnectionSettings(
       host: 'localhost', 
       port: 3306,
-      user: 'my_user',
-      password: 'my_password',
-      db: 'my_db',
+      user: 'root',
+      password: '',
+      db: 'pokemon_app',
     );
 
     return await MySqlConnection.connect(settings);

@@ -24,9 +24,9 @@ CREATE TABLE pokemon (
 INSERT INTO usuario (usuario, contrasena) VALUES ('user1', 'password1');
 
 -- Insertar cuatro Pokémon
-INSERT INTO pokemon (usuario_id, name, types, imageUrl, usuario_id)
+INSERT INTO pokemon (usuario_id, name, types, imageUrl, id)
 VALUES 
-    (1, 'Pikachu', 'Pikachu', 'Electric', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png', 25),
-    (1, 'Charizard', 'Charizard', 'Fire, Flying', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png', 6),
-    (1, 'Blastoise', 'Blastoise', 'Water', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/9.png', 9),
-    (1, 'Venusaur', 'Venusaur', 'Grass, Poison', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/3.png', 3);
+    (1, 'Pikachu', 'Electric', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png', 25),
+    (1, 'Charizard', 'Fire, Flying', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png', 6),
+    (1, 'Blastoise', 'Water', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/9.png', 9),
+    (1, 'Venusaur', 'Grass, Poison', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/3.png', 3);
