@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prueba/services/pokemon_service.dart';
 
 import '../controllers/pokedex_controller.dart';
 import '../models/pokemon.dart';
@@ -12,10 +13,9 @@ class PokedexScreen extends StatefulWidget {
 class _PokedexScreenState extends State<PokedexScreen> {
   List<Pokemon> allPokemonList = [];
   List<Pokemon> filteredPokemonList = [];
-  final PokedexController _controller = PokedexController();
+  final PokedexController _controller = PokedexController(pokemonService: PokemonService());
 
   String selectedType = 'all';
-  int selectedQuantity = -1;
   bool isLoading = true;
 
   @override
@@ -26,7 +26,7 @@ class _PokedexScreenState extends State<PokedexScreen> {
 
   Future<void> fetchPokemonData() async {
     try {
-      final List<Pokemon> fetchedPokemonList = await _controller.fetchPokemonData();
+      final List<Pokemon> fetchedPokemonList = await _controller.getPokemons();
       setState(() {
         allPokemonList = fetchedPokemonList;
         _filterPokemon();
@@ -42,10 +42,7 @@ class _PokedexScreenState extends State<PokedexScreen> {
 
   void _filterPokemon() {
     List<Pokemon> tempFilteredList = _controller.filterPokemonByType(allPokemonList, selectedType);
-    if (selectedQuantity != -1) {
-      tempFilteredList = _controller.limitPokemonQuantity(tempFilteredList, selectedQuantity);
-    }
-    tempFilteredList.sort((a, b) => a.id.compareTo(b.id)); // Ordenar por ID
+
     setState(() {
       filteredPokemonList = tempFilteredList;
     });

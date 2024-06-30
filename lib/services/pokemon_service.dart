@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'pokemon.dart';
+import '../models/pokemon.dart';
 
 class PokemonService {
-  Future<List<Pokemon>> fetchPokemon() async {
+  Future<List<Pokemon>> fetchPokemons() async {
     final response = await http.get(Uri.parse('https://pokeapi.co/api/v2/pokemon?limit=400'));
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
