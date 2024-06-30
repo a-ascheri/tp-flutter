@@ -1,10 +1,12 @@
 import 'dart:convert';
+
 import 'package:http/http.dart' as http;
+
 import '../models/pokemon.dart';
 
 class PokemonService {
   Future<List<Pokemon>> fetchPokemons() async {
-    final response = await http.get(Uri.parse('https://pokeapi.co/api/v2/pokemon?limit=400'));
+    final response = await http.get(Uri.parse('https://pokeapi.co/api/v2/pokemon?limit=100'));
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
       List<Pokemon> pokemonList = [];
@@ -12,7 +14,10 @@ class PokemonService {
         final pokemonData = data['results'][i];
         final pokemon = Pokemon.fromJson(pokemonData, i + 1);
         final details = await fetchPokemonDetails(pokemonData['url']);
-        pokemon.types = details['types'].map<String>((typeData) => typeData['type']['name']).toList();
+        final types = (details['types'] as List)
+          .map((type) => type['type']['name'] as String)
+          .toList();
+        pokemon.types = types;
         pokemonList.add(pokemon);
       }
       return pokemonList;
