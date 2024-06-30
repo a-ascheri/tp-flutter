@@ -38,6 +38,8 @@ dependencies:
   cupertino_icons: ^1.0.6
   sqflite:
   path:
+  mysql1:
+  path_provider:
 
 dev_dependencies:
   flutter_test:

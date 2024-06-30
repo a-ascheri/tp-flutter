@@ -1,26 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:moor/ffi.dart';
-import 'package:moor/moor.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:path/path.dart' as p;
-import 'team_service.dart';
-
-Future<QueryExecutor> _openConnection() async {
-  final dbFolder = await getApplicationDocumentsDirectory();
-  final file = File(p.join(dbFolder.path, 'db.sqlite'));
-  return VmDatabase(file);
-}
+import 'package:prueba/views/pokedex.dart';
+import 'package:prueba/views/pokemondetails.dart';
+import 'package:prueba/views/team_screen.dart';
 
 void main() async {
-  final executor = await _openConnection();
-  final teamService = TeamService(executor);
-  runApp(MyApp(teamService: teamService));
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final TeamService teamService;
-
-  const MyApp({required this.teamService, Key? key}) : super(key: key);
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +17,7 @@ class MyApp extends StatelessWidget {
       initialRoute: "/",
       routes: {
         "/": (context) => PokedexScreen(),
+        "/team": (context) => TeamScreen(),
         "pokemondetails": (context) => PokemonDetailsScreen(pokemon: ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>),
       },
       debugShowCheckedModeBanner: false,
