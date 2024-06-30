@@ -23,3 +23,15 @@ CREATE TABLE equipo (
     FOREIGN KEY (usuario_id) REFERENCES usuario(id),
     UNIQUE KEY usuario_pokemon_unique (usuario_id, pokemon_id)
 );
+
+-- Insertar un usuario
+INSERT INTO usuario (usuario, contraseña)
+VALUES ('user', 'pass');
+
+-- Insertar cuatro Pokémon
+INSERT INTO equipo (usuario_id, mote, nombre, tipos, foto, pokemon_id)
+VALUES 
+    (1, 'Pikachu', 'Pikachu', 'Electric', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png', 25),
+    (1, 'Charizard', 'Charizard', 'Fire, Flying', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png', 6),
+    (1, 'Blastoise', 'Blastoise', 'Water', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/9.png', 9),
+    (1, 'Venusaur', 'Venusaur', 'Grass, Poison', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/3.png', 3);
